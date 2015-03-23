@@ -9,9 +9,9 @@ module LuhnValidator
     # TODO: use the integers in nums_a to validate its last check digit
     index = -1
     double = []
-    sum = nil
+    sum = 0
     until nums_a[index].nil? 
-	if index % 2 == 0 
+	if index.even ?  
 	   num_double = nums_a[index] * 2 
 	   if num_double > 9
 	     double << (num_double.to_s)[0].to_i + (num_double.to_s)[1].to_i
@@ -23,6 +23,6 @@ module LuhnValidator
 	end
 	index += -1     	
      end
-    double.each do {|x| sum += x }
+    double.each { |x| sum += x }
     return sum % 10 == 0 ?  true : false
 end
