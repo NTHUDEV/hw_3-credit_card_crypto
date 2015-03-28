@@ -1,12 +1,9 @@
-# Module LuhnValidator
-module LuhnValidator
-  # Validates credit card number using Luhn Algorithm
-  # arguments: none
-  # assumes: a local String called 'number' exists
-  # returns: true/false whether last digit is correct
-  def validate_checksum
-    nums_a = number.to_s.chars.map(&:to_i)
-    # TODO: use the integers in nums_a to validate its last check digit
+require 'benchmark'
+nums_a = [7, 9, 9, 2, 7, 3, 9, 8, 7, 1, 3]
+n = 10000
+Benchmark.bmbm do |bench|
+bench.report('BJ') do
+n.times do
     index = -1
     double = []
     sum = 0
@@ -25,5 +22,8 @@ module LuhnValidator
     end
     double.each { |x| sum += x }
     sum % 10 == 0 ?  true : false
-  end
 end
+end
+end
+
+
