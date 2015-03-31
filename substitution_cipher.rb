@@ -46,17 +46,20 @@ module SubstitutionCipher
     def self.encrypt(document, key)
       # TODO: encrypt string using caeser cipher
       rand_encrypt = Random.new(key)
-      phrase_arr = document.to_s.split("") 
- 
-      phrase_arr.map! do |char|
-       # permutation = char.ord + rand_encrypt.rand(127)
-       permutation = 128
-       #until permutation < 127
-	   permutation = char.ord + rand_encrypt.rand(127)
-       # end
-        char = permutation.chr
+      phrase_arr = document.to_s.split("")
+      index_key = 0
+      keyspace = {}
+      
+      until keyspace.length > 126 do
+        random_char = rand_encrypt.rand(127)
+        if keyspace.has_value? random_char
+          # Do nothing
+        else 
+           keyspace[index_key] = random_char
+           index_key += 1
+        end
       end 
-      phrase_arr.join
+      phrase_arr.map!{|c| keyspace[c.ord].chr}.join
     end
 
     # Decrypts String document using integer key
@@ -68,16 +71,21 @@ module SubstitutionCipher
       # TODO: decrypt string using caeser cipher
       rand_decrypt = Random.new(key)
       phrase_arr = document.to_s.split("") 
- 
-      phrase_arr.map! do |char|
-        # permutation = char.ord - rand_decrypt.rand(127)
-	permutation = -1
-        #until permutation >= 0
-	 permutation = char.ord - rand_decrypt.rand(127)
-        #end
-        char = permutation.chr
+      index_key = 0
+      keyspace = {}
+      
+      until keyspace.length > 126 do
+        random_char = rand_decrypt.rand(127)
+        if keyspace.has_value? random_char
+          # Do nothing
+        else 
+           keyspace[index_key] = random_char
+           index_key += 1
+        end
       end 
-      phrase_arr.join
+
+      phrase_arr.map!{|c| keyspace.key(c.ord).chr}.join
+
     end
   end
 
