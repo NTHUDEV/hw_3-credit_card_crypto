@@ -1,5 +1,5 @@
 require_relative './Array'
-
+# Module DoubleTransposition
 module DoubleTranspositionCipher
   def self.encrypt(document, key)
     # TODO: FILL THIS IN!
@@ -14,13 +14,12 @@ module DoubleTranspositionCipher
     size = Math.sqrt(doc.length).ceil
     relleno = aleatorio.rand(127)
     matrix = []
-    until doc.length % size == 0 do doc.insert(0,relleno.chr) end
+    until doc.length % size == 0 do doc.insert(0, relleno.chr) end
     doc.chars.map.each_slice(size) { |c| matrix << c }
     matrix.shuffle!(random: Random.new(key))
-    matrix.map { |d| d.shuffle!(random: Random.new(key))}    
+    matrix.map { |d| d.shuffle!(random: Random.new(key)) }    
     matrix.join
   end
-
 
   def self.decrypt(ciphertext, key)
     # TODO: FILL THIS IN!
@@ -29,11 +28,10 @@ module DoubleTranspositionCipher
     relleno = aleatorio.rand(127)
     matrix = []
     ciphertext.chars.map.each_slice(size) { |c| matrix << c }
-    matrix.map! { |c| c.map { |i| i.ord }}
-    matrix.map! { |d| d.unshuffle(random: Random.new(key))}
+    matrix.map! { |c| c.map { |i| i.ord } }
+    matrix.map! { |d| d.unshuffle(random: Random.new(key)) }
     matrix = matrix.unshuffle(random: Random.new(key))
-    matrix.map! { |c| c.map { |i| i.chr }}
-    matrix.join.gsub(relleno.chr,"")
+    matrix.map! { |c| c.map { |i| i.chr } }
+    matrix.join.gsub(relleno.chr, '')
   end
 end
-

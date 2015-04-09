@@ -11,24 +11,36 @@ describe 'Test hashing requirements' do
   describe 'Test regular hashing' do
     it 'should find the same hash for identical cards' do
       # TODO: implement this test
+      hash1 = @cc1.hash
+      hash2 = @cc2.hash
+      hash1.must_equal hash2
     end
-
     it 'should produce different hashes for different information' do
       # TODO: implement this test
+      hash1 = @cc1.hash
+      hash2 = @cc3.hash
+      hash1.wont_equal hash2
     end
   end
 
   describe 'Test cryptographic hashing' do
     it 'should find the same hash for identical cards' do
       # TODO: implement this test
+      hash1 = @cc1.hash_secure
+      hash2 = @cc2.hash_secure
+      hash1.must_equal hash2
     end
-
     it 'should produce different hashes for different information' do
       # TODO: implement this test
+      hash1 = @cc1.hash_secure
+      hash2 = @cc3.hash_secure
+      hash1.wont_equal hash2
     end
-
     it 'should not produce the same regular vs. cryptographic hash' do
       # TODO: implement this test
+      hash1 = @cc1.hash
+      hash2 = @cc1.hash_secure
+      hash1.wont_equal hash2
     end
   end
 end
