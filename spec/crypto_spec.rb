@@ -1,5 +1,7 @@
 require_relative '../credit_card'
 require_relative '../substitution_cipher'
+require_relative '../double_trans_cipher'
+require_relative '../aes_cipher'
 require 'minitest/autorun'
 
 describe 'Test card info encryption' do
@@ -8,15 +10,15 @@ describe 'Test card info encryption' do
     @key = 3
   end
 
-  describe 'Using Caeser cipher' do
+  describe 'Using Caesar cipher' do
     it 'should encrypt card information' do
-      enc = SubstitutionCipher::Caeser.encrypt(@cc, @key)
+      enc = SubstitutionCipher::Caesar.encrypt(@cc, @key)
       enc.wont_equal @cc.to_s
     end
 
     it 'should decrypt text' do
-      enc = SubstitutionCipher::Caeser.encrypt(@cc, @key)
-      dec = SubstitutionCipher::Caeser.decrypt(enc, @key)
+      enc = SubstitutionCipher::Caesar.encrypt(@cc, @key)
+      dec = SubstitutionCipher::Caesar.decrypt(enc, @key)
       dec.must_equal @cc.to_s
     end
   end
@@ -30,6 +32,34 @@ describe 'Test card info encryption' do
     it 'should decrypt text' do
       enc = SubstitutionCipher::Permutation.encrypt(@cc, @key)
       dec = SubstitutionCipher::Permutation.decrypt(enc, @key)
+      dec.must_equal @cc.to_s
+    end
+  end
+
+  # TODO: Add tests for double transposition and AES ciphers
+  #       Can you DRY out the tests using metaprogramming? (see lecture slide)
+  describe 'Using Double Transposition Cipher' do
+    it 'should encrypt card information' do
+      enc = DoubleTranspositionCipher.encrypt(@cc, @key)
+      enc.wont_equal @cc.to_s
+    end
+
+    it 'should decrypt text' do
+      enc = DoubleTranspositionCipher.encrypt(@cc, @key)
+      dec = DoubleTranspositionCipher.decrypt(enc, @key)
+      dec.must_equal @cc.to_s
+    end
+  end
+
+  describe 'Using Double AES Cipher' do
+    it 'should encrypt card information' do
+      enc = AesCipher.encrypt(@cc, @key)
+      enc.wont_equal @cc.to_s
+    end
+
+    it 'should decrypt text' do
+      enc = AesCipher.encrypt(@cc, @key)
+      dec = AesCipher.decrypt(enc, @key)
       dec.must_equal @cc.to_s
     end
   end

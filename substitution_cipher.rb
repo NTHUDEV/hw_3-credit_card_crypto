@@ -1,5 +1,5 @@
 module SubstitutionCipher
-  module Caeser
+  module Caesar
     # Encrypts document using key
     # Arguments:
     #   document: String
@@ -48,8 +48,7 @@ module SubstitutionCipher
       rand_encrypt = Random.new(key)
       phrase_arr = document.to_s.split("")
       index_key = 0
-      keyspace = {}
-      
+      keyspace = {}      
       until keyspace.length > 126 do
         random_char = rand_encrypt.rand(127)
         if keyspace.has_value? random_char
@@ -61,7 +60,6 @@ module SubstitutionCipher
       end 
       phrase_arr.map!{|c| keyspace[c.ord].chr}.join
     end
-
     # Decrypts String document using integer key
     # Arguments:
     #   document: String
@@ -72,8 +70,7 @@ module SubstitutionCipher
       rand_decrypt = Random.new(key)
       phrase_arr = document.to_s.split("") 
       index_key = 0
-      keyspace = {}
-      
+      keyspace = {}      
       until keyspace.length > 126 do
         random_char = rand_decrypt.rand(127)
         if keyspace.has_value? random_char
@@ -82,11 +79,8 @@ module SubstitutionCipher
            keyspace[index_key] = random_char
            index_key += 1
         end
-      end 
-
+      end
       phrase_arr.map!{|c| keyspace.key(c.ord).chr}.join
-
     end
   end
-
 end
